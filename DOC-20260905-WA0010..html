@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Teacher's Day</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Confetti & Canvas Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <!-- Background Glowing Elements -->
+    <div class="bg-circle bg1"></div> 
+    <div class="bg-circle bg2"></div> 
+    <div class="bg-circle bg3"></div>
+
+    <div id="mainContainer">
+        <div class="container">
+
+            <!-- 1. GIFT ANIMATION SCREEN -->
+            <div class="gift-container">
+                <div class="gift-animation">
+                    <div class="sparkle-container" id="sparkleContainer"></div>
+
+                    <div class="gift-box" id="giftBox" onclick="handleGiftClick()">
+                        <img src="images/Aarush.jpg" class="gift-image" alt="Gift Box">
+                    </div>
+
+                    <p class="tap-text">Tap the Gift to Open</p>
+                </div>
+
+                <!-- SURPRISE CARD POPUP -->
+                <div id="surpriseCard" class="surprise-card" style="display: none;">
+                    <h2>🎉 Happy Teacher's Day! 🎉</h2>
+                    <p>A small gesture of respect and appreciation for everything you do.</p>
+                    <button id="startBtn" onclick="openTeacherPage()">Start Celebration ✨</button>
+                </div>
+            </div>
+
+            <!-- 2. GIFT MESSAGE SCREEN -->
+            <div class="gift-message" id="giftMessage" style="display:none;">
+                <div class="sparkle-burst">
+                    <span>✨</span>
+                    <span>🌟</span>
+                    <span>✨</span>
+                    <span>💫</span>
+                    <span>✨</span>
+                    <span>🌟</span>
+                </div>
+
+                <h1 class="teacher-wish">🌸 Happy Teacher's Day 🌸</h1>
+                <p class="reveal-text">A little surprise, made with respect and gratitude. ❤️</p>
+            </div>
+
+            <!-- 3. VERIFICATION / NAME SCREEN -->
+            <div class="name-screen" style="display:none;">
+                <h2>Enter Your Name</h2>
+                <p class="instruction">Please enter your name and verification code to continue.</p>
+
+                <input type="text" id="teacherName" placeholder="Enter your name..." onkeydown="if(event.key==='Enter') checkName()" oninput="clearError()">
+                <br><br>
+                
+                <!-- Password Input with Toggle Button Container -->
+                <div class="password-wrapper">
+                    <input type="password" id="teacherCode" placeholder="Enter Verification Code" onkeydown="if(event.key==='Enter') checkName()" oninput="clearError()" maxlength="10">
+                    <button type="button" id="toggleCodeBtn" class="toggle-btn" onclick="togglePassword()">👁️</button>
+                </div>
+                
+                <p id="errorMessage"></p>
+                <button onclick="checkName()">Continue →</button>
+            </div>
+
+            <!-- 4. MAIN TEACHER PAGE -->
+            <div class="teacher-page" style="display:none;">
+                <div class="luxury-badge">✨ Special Edition Wish ✨</div>
+
+                <h1 class="main-title">Happy Teacher's Day!</h1>
+                <p class="subtitle-line1">Crafted With Gratitude</p>
+                <p class="subtitle-line2">Created With Respect</p>
+
+                <p class="hero-subtitle">Every lesson you taught became a step towards our future.</p>
+                
+                <div class="top-decoration">
+                    <h2 id="greeting"></h2>
+                    <p id="welcomeLine"></p>
+                    <h1>❀ ───────── ✦ ───────── ❀</h1>
+                </div>
+
+                <div class="hero-banner fade-up">
+                    <h3>You Inspire Us Every Day</h3>
+                    <p>Thank you for being a guiding light and making a difference in countless lives.</p>
+                </div>
+
+                <h2 class="teacher-heading">With Heartfelt Gratitude</h2>
+                <p class="teacher-subtitle">Prepared especially for you.</p>
+                
+                <div class="scroll-hint">
+                    ⬇
+                    <p>Scroll to continue</p>
+                </div>
+
+                <img id="teacherPhoto" class="teacher-photo fade-up" src="images/test.jpg" alt="Teacher Photo">
+                <div class="divider">✦ ✿ ✦</div>
+                
+                <h2 id="teacherTitle"></h2>
+                
+                <div class="quote-card">
+                    <span class="quote-icon">❝</span>
+                    <p id="teacherQuote">A great teacher inspires hope, ignites imagination, and instills a love of learning.</p>
+                    <span class="quote-icon">❞</span>
+                </div>
+
+                <div class="message-divider">🌸 ─── Personal Message ─── 🌸</div>
+                <p id="teacherMessage"></p>
+
+                <div class="appreciation-box fade-up"> 
+                    <h3>🌟 A Note of Appreciation</h3>
+                    <p>Every lesson you teach, every word of encouragement you share, and every effort you make leaves a lasting impact on me.</p>
+                </div>
+
+                <div class="section-divider"><span>✦ ✿ ✦</span></div>
+
+                <div class="quote-box fade-up">
+                    <p>"A great teacher doesn't just teach lessons; they inspire lives, shape character, and leave footprints that last forever."</p>
+                </div>
+
+                <div class="section-divider"><span>✦ ✿ ✦</span></div>
+
+                <!-- PERSONAL NOTE SECTION (DYNAMIC) -->
+                <div class="letter-box fade-up">
+                    <h3 id="personalNoteHeading">💌 A Personal Note</h3>
+                    <p id="personalNoteText"></p>
+                </div>
+
+                <div class="section-divider"><span>✦ ✿ ✦</span></div>
+
+                <div class="qualities fade-up">
+                    <div class="quality">🌟 <span>Inspiration</span></div>
+                    <div class="quality">📚 <span>Knowledge</span></div>
+                    <div class="quality">❤️ <span>Kindness</span></div>
+                    <div class="quality">🌱 <span>Growth</span></div>
+                </div>
+
+                <!-- PREMIUM CONTINUE SECTION -->
+                <div class="continue-card-wrapper fade-up">
+                    <div class="continue-card">
+                        <div class="card-sparkle">✨</div>
+                        <p class="continue-subtitle">Share your valuable thoughts</p>
+                        <button class="premium-continue-btn" onclick="openFeedback()">
+                            <span>Continue</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                        <button id="downloadCardBtn" onclick="downloadTeacherCard()" class="download-btn">
+                            📥 Download Memory Card
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. THANK YOU PAGE -->
+            <div class="thankyou-page" style="display:none;">
+                <h1>Thank You! ❤️</h1>
+                <p id="thankYouText">
+                    Thank you for taking a moment to visit this small gift.<br><br>
+                    Your guidance, patience, and encouragement have made a lasting difference in our lives.<br><br>
+                    This website is a small token of gratitude, created with respect and appreciation for everything you do.<br><br>
+                    Happy Teacher's Day! 🌸
+                </p>
+                <button onclick="openFeedback()">Share Your Feedback →</button>
+            </div>
+
+            <!-- 6. FEEDBACK PAGE -->
+            <div class="feedback-page" style="display:none;">
+                <h1>Feedback 💙</h1>
+                <p>Share your valuable feedback with Aarush. Your thoughts and suggestions will help make this little gift even more special. 💙</p>
+
+                <textarea id="feedbackBox" placeholder="Write your feedback here..." rows="6"></textarea>
+                <br><br>
+                <button onclick="submitFeedback()">Submit Feedback</button>
+            </div>
+
+            <!-- 7. SUCCESS PAGE -->
+            <div class="success-page" style="display:none;">
+                <div class="success-icon">🎉</div>
+                <h1>🎉 Feedback Submitted Successfully!</h1>
+
+                <p id="successMessage">
+                    💙 Thank you for sharing your valuable feedback.<br>
+                    Your kind words and suggestions mean a lot to me.
+                </p>
+
+                <!-- SPECIAL THANK YOU CARD -->
+                <div class="thank-you-card fade-up show">
+                    <div class="card-sparkle">✨</div>
+                    <h3>🌸 Thank You For Visiting! 🌸</h3>
+                    <p>
+                        Your presence, guidance, and encouraging words mean the world to us. This small digital experience was created with deep respect and admiration for everything you do to shape our future.
+                    </p>
+                </div>
+
+                <div class="made-by" style="margin: 20px 0;">
+                    Made with Respect ❤️<br>
+                    <strong>by Aarush</strong>
+                </div>
+
+                <div class="action-buttons">
+                    <button onclick="backToTeacher()">🏠 Return to Your Page</button>
+                    <button onclick="finishWebsite()">👋 Finish & Exit</button>
+                    <button id="exitBtn" onclick="finishWebsite()" style="display:none;">👋 Exit Website</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script src="script.js"></script>
+
+    <!-- Sound Effects & Background Music -->
+    <audio id="popSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=pop-39222.mp3" preload="auto"></audio>
+    <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-10881.mp3" loop preload="auto"></audio>
+
+    <div class="audio-toggle-widget" id="audioToggleBtn" title="Toggle Ambient Music">
+        <span id="audioIcon">🎵</span>
+    </div>
+
+</body>
+
+</html>
