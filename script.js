@@ -309,11 +309,16 @@ function openFeedback() {
 }
 
 function submitFeedback() {
-    const feedbackBox = document.getElementById("feedbackBox");
-    if (feedbackBox && feedbackBox.value.trim() === "") {
-        alert("Please write your feedback before submitting!");
-        return;
+    let msg = document.getElementById("feedbackBox").value;
+    if(msg.trim() !== "") {
+        let phone = "916398716664"; // अपना 10-अंकों का WhatsApp नंबर डालें (बिना + के)
+        let url = `https://wa.me/${phone}?text=${encodeURIComponent("Feedback: " + msg)}`;
+        window.open(url, "_blank");
+    } else {
+        alert("Please write a message before submitting!");
     }
+}
+
 
     experienceCompleted = true;
     launchConfetti();
