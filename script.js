@@ -213,7 +213,6 @@ function checkName() {
     const nameExists = teacherNames[searchName];
     const codeCorrect = teacherCodes[searchName] === code;
 
-    // कन्फ़ेट्टी सिर्फ तभी ट्रिगर होगी जब दोनों डिटेल्स (नाम और कोड) बिल्कुल सही होंगी
     if (nameExists && codeCorrect) {
         let name = teacherNames[searchName];
         triggerRoyalConfetti();
@@ -247,7 +246,6 @@ function showTeacherPageDirectly(name) {
     const honorific = currentTeacher.title || "Sir";
     const prefix = currentTeacher.prefix || "Mr.";
 
-    // Dynamic Text Updates
     if (titleEl) titleEl.innerHTML = `${prefix} ${name}`;
     if (greetingEl) greetingEl.innerHTML = isHindi ? `आदरणीय ${name} महोदय/महोदया,` : `Respected ${name} ${honorific},`;
     if (welcomeEl) welcomeEl.innerHTML = isHindi 
@@ -258,7 +256,6 @@ function showTeacherPageDirectly(name) {
     if (noteEl) noteEl.innerHTML = currentTeacher.personalNote || "";
     if (photoEl) photoEl.src = currentTeacher.photo || "";
 
-    // Button Text Update
     if (continueBtn) {
         continueBtn.textContent = isHindi ? "आगे बढ़ें ✨" : "Continue ✨";
     }
@@ -311,29 +308,25 @@ function openFeedback() {
 function submitFeedback() {
     let msg = document.getElementById("feedbackBox").value;
     if(msg.trim() !== "") {
-        let phone = "916398716664"; // अपना 10-अंकों का WhatsApp नंबर डालें (बिना + के)
+        let phone = "916398716664"; 
         let url = `https://wa.me/${phone}?text=${encodeURIComponent("Feedback: " + msg)}`;
         window.open(url, "_blank");
+
+        experienceCompleted = true;
+        launchConfetti();
+        hideAllScreens();
+
+        const successPage = document.querySelector(".success-page");
+
+        if (successPage) {
+            successPage.style.display = "block";
+            successPage.classList.remove("enter-animate");
+            void successPage.offsetWidth;
+            successPage.classList.add("enter-animate");
+        }
     } else {
         alert("Please write a message before submitting!");
     }
-}
-
-
-    experienceCompleted = true;
-    launchConfetti();
-    hideAllScreens();
-
-    const successPage = document.querySelector(".success-page");
-
-    if (successPage) {
-        successPage.style.display = "block";
-        
-        successPage.classList.remove("enter-animate");
-        void successPage.offsetWidth;
-        successPage.classList.add("enter-animate");
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function backToTeacher() {
